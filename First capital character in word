@@ -1,0 +1,43 @@
+// Write a program in C to find the first capital letter in a string using recursion
+#include <stdio.h>
+#include <stdlib.h>
+
+int findFirstCapital(char *str);
+
+int main() {
+    char str[50];
+    printf("Enter the string: ");
+    scanf("%s", str);
+
+    int index = findFirstCapital(str);
+
+    if (index != -1) {
+        printf("The first capital letter is '%c' at position %d\n", str[index], index);
+    } else {
+        printf("No capital letters found in the string.\n");
+    }
+
+    return 0;
+}
+
+int findFirstCapital(char *str) {
+    if (*str == '\0') {
+        // End of the string, no capital letter found
+        return -1;
+    }
+
+    if (*str >= 'A' && *str <= 'Z') {
+        // Found a capital letter
+        return 0;
+    }
+
+    // Recursively search in the remaining part of the string
+    int indexInRest = findFirstCapital(str + 1);
+
+    if (indexInRest == -1) {
+        return -1; // No capital letter found in the remaining part of the string
+    }
+
+    // If a capital letter was found in the remaining part, return its position in the original string
+    return indexInRest + 1;
+}
